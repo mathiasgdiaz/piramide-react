@@ -1,7 +1,7 @@
 import React from "react";
-import "./instructionModal.css";
+import "./InstructionModal.css";
 
-export default function instructionModal({ open, onClose }) {
+export default function InstructionModal({ open, onClose }) {
   if (!open) return null;
 
   return (
