@@ -1,0 +1,236 @@
+:root {
+  --cell-size: 100px;
+  --gap: 10px;
+
+  /* Tu paleta base (mantengo nombres) */
+  --bg: #0e1a12;         /* se usará como fallback */
+  --panel: #1f3325;
+  --text: #e9f1ea;
+  --ok: #2fbf71;
+  --bad: #ff5a5f;
+  --fixed: #c7d7c9;
+  --blink: #ffec99;
+
+  /* Extras navideños */
+  --bg1: #0b1e12;        /* verde pino oscuro */
+  --bg2: #0f2a18;        /* degradado */
+  --gold: #ffd166;
+  --gold-deep: #e3b543;
+  --ornament-red1: #7a0f14;
+  --ornament-red2: #5a0b0e;
+  --garland-green1: #0f3b28;
+  --garland-green2: #19593a;
+
+  --shadow-deep: 0 10px 30px rgba(0,0,0,.35);
+  --shadow-soft: 0 6px 16px rgba(0,0,0,.25);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.05), transparent 60%),
+    radial-gradient(1200px 600px at 90% 0%, rgba(255,255,255,0.06), transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+}
+
+/* ===== Contenedor con nieve sutil ===== */
+.app {
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  position: relative;
+  isolation: isolate;
+}
+
+/* Nieve (dos capas) */
+.app::before,
+.app::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  z-index: -1;
+}
+.app::before {
+  background-image:
+    radial-gradient(white 1.4px, transparent 1.5px),
+    radial-gradient(white 1.2px, transparent 1.4px);
+  background-size: 8px 8px, 12px 12px;
+  opacity: .28;
+  animation: snowFall1 22s linear infinite;
+}
+.app::after {
+  background-image:
+    radial-gradient(white 1.8px, transparent 2px),
+    radial-gradient(white 1.6px, transparent 1.8px);
+  background-size: 14px 14px, 18px 18px;
+  opacity: .18;
+  animation: snowFall2 34s linear infinite;
+}
+@keyframes snowFall1 {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 700px, 0 1050px; }
+}
+@keyframes snowFall2 {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 1200px, 0 1800px; }
+}
+
+/* ===== Toolbar con guirnalda ===== */
+.toolbar {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, #185b3a, var(--panel));
+  padding: 12px 16px; border-radius: 12px; margin-bottom: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+}
+.toolbar h1 { font-size: 20px; margin: 0; letter-spacing: .3px; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+
+/* Guirnalda */
+.toolbar::after {
+  content: "";
+  position: absolute;
+  left: 12px; right: 12px; bottom: -8px; height: 8px;
+  border-radius: 0 0 12px 12px;
+  background:
+    radial-gradient(circle at 10% 50%, #ff6961 2px, transparent 3px),
+    radial-gradient(circle at 30% 50%, #ffd166 2px, transparent 3px),
+    radial-gradient(circle at 50% 50%, #6ee7b7 2px, transparent 3px),
+    radial-gradient(circle at 70% 50%, #f472b6 2px, transparent 3px),
+    radial-gradient(circle at 90% 50%, #60a5fa 2px, transparent 3px),
+    repeating-linear-gradient(90deg, var(--garland-green1), var(--garland-green2) 16px, var(--garland-green1) 32px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+
+/* Botones */
+.toolbar-actions button {
+  margin-left: 8px; padding: 8px 12px; border-radius: 10px; border: 0;
+  color: var(--text); cursor: pointer; font-weight: 600; letter-spacing: .2px;
+  box-shadow: var(--shadow-soft);
+  transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
+  background: #3e5c45;
+}
+.toolbar-actions button:hover { filter: brightness(1.08); }
+.toolbar-actions button:active { transform: translateY(1px) scale(.99); }
+/* Opcional: distintos estilos por orden (caramelo / abeto / campana) */
+.toolbar-actions button:nth-child(1) {
+  background:
+    repeating-linear-gradient(45deg, #ffffff 0 10px, #c61d23 10px 20px);
+  border: 2px solid rgba(255,255,255,.2);
+}
+.toolbar-actions button:nth-child(2) {
+  background: linear-gradient(180deg, #2f855a, #276749);
+  border: 2px solid rgba(255,255,255,.2);
+}
+.toolbar-actions button:nth-child(3) {
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  color: #3b2f06;
+  border: 2px solid rgba(0,0,0,.08);
+}
+
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: var(--gap); }
+.pyramid-row { display: flex; gap: var(--gap); }
+
+/* ===== Celdas como adornos ===== */
+.cell {
+  width: var(--cell-size); height: var(--cell-size);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.25), transparent 35%),
+    radial-gradient(circle at 75% 80%, rgba(0,0,0,.25), transparent 40%),
+    linear-gradient(180deg, var(--ornament-red1), var(--ornament-red2));
+  border: 4px solid #7c0f13;
+  transition: box-shadow .2s, transform .05s, border-color .2s, filter .2s;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), var(--shadow-soft);
+  position: relative;
+}
+
+/* Casquete + hilo */
+.cell::before,
+.cell::after {
+  content: "";
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.cell::before {
+  top: -12px; width: 28px; height: 14px; border-radius: 5px 5px 3px 3px;
+  background: linear-gradient(180deg, #ffe69a, #d4a419);
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+.cell::after {
+  top: -32px; width: 2px; height: 20px; border-radius: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.25));
+}
+
+/* Fijas doradas */
+.cell-fixed {
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 36%),
+    radial-gradient(circle at 75% 80%, rgba(0,0,0,.2), transparent 40%),
+    linear-gradient(180deg, var(--gold), var(--gold-deep));
+  border-color: #b08912;
+  color: #3b2f06;
+  font-weight: 700;
+}
+
+/* Inputs */
+.cell-editable .cell-input {
+  width: 75%;
+  background: transparent;
+  color: var(--text);
+  text-align: center;
+  border: none;
+  outline: none;
+  font-size: 22px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.3);
+}
+
+.cell-correct {
+  border-color: var(--ok);
+  filter: drop-shadow(0 0 12px rgba(46, 204, 113, 0.45));
+}
+.cell-incorrect {
+  border-color: var(--bad);
+  animation: shake .18s linear 0s 1;
+}
+
+@keyframes shake {
+  10% { transform: translateX(-1px); }
+  30% { transform: translateX(1px); }
+  50% { transform: translateX(-1px); }
+  70% { transform: translateX(1px); }
+}
+
+/* Pista: halo dorado parpadeante */
+@keyframes hintBlink {
+  0%, 100% { box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), 0 0 0 0 rgba(255, 215, 100, 0.0); }
+  50% { box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), 0 0 0 12px rgba(255, 215, 100, 0.65); }
+}
+.cell-blink { animation: hintBlink 1.25s ease-in-out infinite; }
+
+/* ===== Barra de estado ===== */
+.statusbar {
+  margin-top: 16px;
+  display: flex; gap: 16px; justify-content: center;
+  color: #f3efe7;
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 560px) {
+  :root { --cell-size: 80px; --gap: 12px; }
+  .toolbar h1 { font-size: 18px; }
+}

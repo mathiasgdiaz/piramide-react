@@ -1,0 +1,137 @@
+/* Fondo oscuro */
+.instruction-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+
+/* Caja del modal */
+.instruction-modal {
+  background: #000000;
+  padding: 24px;
+  width: 330px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 255, 234, 0.25);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+  position: relative;
+}
+
+.instruction-modal h2 {
+  margin-top: 0;
+}
+
+.desc {
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: #82ecff;
+}
+
+/* MINI PIRÁMIDE */
+.example-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-pyramid {
+  margin: 10px 0;
+}
+
+.mini-row {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.mini-node {
+  width: 48px;
+  height: 48px;
+  background: #cdfcee;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #001229;
+  position: relative;
+  transition: border-color 0.4s ease, transform 0.3s ease;
+}
+
+/* Animaciones de explicación */
+.highlight-child-left {
+  border-color: #ff6666;
+  animation: pulseLeft 1.5s infinite ease-in-out;
+}
+
+.highlight-child-right {
+  border-color: #66a6ff;
+  animation: pulseRight 1.5s infinite ease-in-out;
+}
+
+.highlight-parent {
+  border-color: #55cc55;
+  animation: pulseParent 1.5s infinite ease-in-out;
+}
+
+/* Texto explicativo */
+.explanation {
+  font-size: 15px;
+  margin-top: 8px;
+  color: #25cacf;
+}
+
+.sum {
+  color: #00ff00;
+  font-weight: bold;
+}
+
+.resta {
+  color: #ff0000;
+  font-weight: bold;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Botón */
+.close-btn {
+  margin-top: 16px;
+  padding: 8px 18px;
+  border: none;
+  background: #333;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #111;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseParent {
+  0%, 100% { transform: scale(1); border-color: #55cc55; }
+  50% { transform: scale(1.12); border-color: #44aa44; }
+}
+
+@keyframes pulseLeft {
+  0%, 100% { transform: scale(1); border-color: #ff6666; }
+  50% { transform: scale(1.12); border-color: #dd4444; }
+}
+
+@keyframes pulseRight {
+  0%, 100% { transform: scale(1); border-color: #66a6ff; }
+  50% { transform: scale(1.12); border-color: #4488dd; }
+}
